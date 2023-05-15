@@ -1,0 +1,6 @@
+#ifndef STRUCTURED_LIBRARY_H
+#define STRUCTURED_LIBRARY_H
+
+void hello();
+
+#endif //STRUCTURED_LIBRARY_H
