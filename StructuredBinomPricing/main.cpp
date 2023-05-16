@@ -14,7 +14,7 @@ int main() {
     std::cin >> up >> down >> rfr;
 
     // Create binomial model with UpFactor=0.05, DownFactor=0.05, and riskFreeRate=0.0
-    auto pricer = new BinomPricer(up, down, rfr);
+    auto pricer = BinomPricer(up, down, rfr);
 
     double strike = 100.0;
     std::cout << "Enter strike price: " << std::endl;
@@ -35,7 +35,7 @@ int main() {
 
 
     // Price european option as call
-    auto call_price = pricer->Evaluate(
+    auto call_price = pricer.Evaluate(
             S0,
             N,
             [option](double x){return option->Call(x);}
@@ -43,7 +43,7 @@ int main() {
     std::cout << "Eur Call Price: " << call_price << std::endl;
 
     // Price european option as put
-    auto put_price = pricer->Evaluate(
+    auto put_price = pricer.Evaluate(
             S0,
             N,
             [option](double x){return option->Put(x);}
@@ -51,22 +51,41 @@ int main() {
     std::cout << "Eur Put Price: " << put_price << std::endl;
 
 
-    auto digital = new DigitalOption(strike);
+    auto digital = DigitalOption<Option>(Option(strike));
     // Price digital european option as call
-    call_price = pricer->Evaluate(
+    call_price = pricer.Evaluate(
             S0,
             N,
-            [digital](double x){return digital->Call(x);}
+            [&digital](double x){return digital.Call(x);}
     );
     std::cout << "Eur Digital Call Price: " << call_price << std::endl;
 
     // Price digital european option as put
-    put_price = pricer->Evaluate(
+    put_price = pricer.Evaluate(
             S0,
             N,
-            [digital](double x){return digital->Put(x);}
+            [&digital](double x){return digital.Put(x);}
     );
     std::cout << "Eur Digital Put Price: " << put_price << std::endl;
+
+    auto doubleOption = new DoubleOption<Option>(90.0, 100.0);
+    auto digit = DigitalOption<DoubleOption<Option>>(*doubleOption);
+
+    // Price Double digital option
+    call_price = pricer.Evaluate(
+            S0,
+            N,
+            [&digit](double x){return digit.Call(x);}
+    );
+    std::cout << "Eur Double Digital Call Price: " << call_price << std::endl;
+
+    // Price Double digital option
+    put_price = pricer.Evaluate(
+            S0,
+            N,
+            [&digit](double x){return digit.Put(x);}
+    );
+    std::cout << "Eur Double Digital Put Price: " << put_price << std::endl;
 
     return 0;
 }
