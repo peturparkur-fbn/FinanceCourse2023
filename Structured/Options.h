@@ -49,7 +49,7 @@ struct DoubleDigital {
     DigitalOption<U> high;
 
     DoubleDigital(T _low, U _high): low(_low), high(_high) {}
-    DoubleDigital(double _low, double _high): low(DigitalOption<CallOption>(_low)), high(DigitalOption<PutOption>(_high)) { }
+    DoubleDigital(double _low, double _high): low(CallOption(_low)), high(PutOption(_high)) { }
 
     double Payout(double currPrice) {
         return (low.Payout(currPrice) > 0) && (high.Payout(currPrice) > 0);
