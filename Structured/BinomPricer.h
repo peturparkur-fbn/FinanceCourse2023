@@ -1,5 +1,5 @@
-#ifndef BINOMPRICER_H
-#define BINOMPRICER_H
+#ifndef STRUCTURED_BINOMPRICER_H
+#define STRUCTURED_BINOMPRICER_H
 
 #include <cmath>
 #include <ranges>

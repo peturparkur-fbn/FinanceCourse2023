@@ -3,4 +3,4 @@ project(Structured)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_library(Structured Options.h BinomPricer.h BinomPricer.h)
+add_library(Structured Options.h BinomPricer.h)

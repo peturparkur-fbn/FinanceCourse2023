@@ -68,14 +68,13 @@ int main() {
     );
     std::cout << "Eur Digital Put Price: " << put_price << std::endl;
 
-    auto doubleOption = new DoubleOption<Option>(90.0, 100.0);
-    auto digit = DigitalOption<DoubleOption<Option>>(*doubleOption);
+    auto doubleDigital = DoubleDigital<Option, Option>(Option(90.0), Option(100.0));
 
     // Price Double digital option
     call_price = pricer.Evaluate(
             S0,
             N,
-            [&digit](double x){return digit.Call(x);}
+            [&doubleDigital](double x){return doubleDigital.Call(x);}
     );
     std::cout << "Eur Double Digital Call Price: " << call_price << std::endl;
 
@@ -83,7 +82,7 @@ int main() {
     put_price = pricer.Evaluate(
             S0,
             N,
-            [&digit](double x){return digit.Put(x);}
+            [&doubleDigital](double x){return doubleDigital.Put(x);}
     );
     std::cout << "Eur Double Digital Put Price: " << put_price << std::endl;
 

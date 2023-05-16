@@ -42,21 +42,20 @@ struct DigitalOption {
     }
 };
 
-template<IOption T>
-struct DoubleOption {
-    T low;
-    T high;
+template<IOption T, IOption U>
+struct DoubleDigital {
+    DigitalOption<T> low;
+    DigitalOption<U> high;
 
-    DoubleOption(T _low, T _high): low(_low), high(_high) {}
-
-    DoubleOption(double _low, double _high): low(Option(_low)), high(Option(_high)) { }
+    DoubleDigital(T _low, U _high): low(_low), high(_high) {}
+    DoubleDigital(double _low, double _high): low(DigitalOption<Option>(_low)), high(DigitalOption<Option>(_high)) { }
 
     double Call(double currPrice){
-        return low.Call(currPrice) + high.Put(currPrice);
+        return (low.Call(currPrice) > 0) && (high.Put(currPrice) > 0);
     }
 
     double Put(double currPrice) {
-        return low.Put(currPrice) + high.Call(currPrice);
+        return (low.Put(currPrice) > 0) || (high.Call(currPrice) > 0);
     }
 };
 
