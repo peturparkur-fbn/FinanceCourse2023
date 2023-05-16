@@ -1,11 +1,9 @@
 #include <iostream>
 // Don't know how to import from other project ¯\_(ツ)_/¯
-#include "../Structured//BinomPricer.h"
+#include "../Structured/BinomPricer.cpp"
 #include "../Structured/Options.h"
-#include <string>
 
 int main() {
-
     double up = 0.05;
     double down = 0.025;
     double rfr = 0.0;

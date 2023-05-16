@@ -10,7 +10,6 @@ concept IOption = requires(T a, double b) {
     { a.Payout(b) } -> std::same_as<double>;
 };
 
-
 struct CallOption {
     double strike;
     CallOption(double k){
