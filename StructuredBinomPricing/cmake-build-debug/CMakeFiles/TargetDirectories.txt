@@ -1,3 +1,3 @@
-/Users/peternagymathe/work/code/FinanceCourse2023/StructuredBinomPricing/cmake-build-debug/CMakeFiles/StructuredBinomPricing.dir
-/Users/peternagymathe/work/code/FinanceCourse2023/StructuredBinomPricing/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/peternagymathe/work/code/FinanceCourse2023/StructuredBinomPricing/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/peter/CLionProjects/FinanceCourse2023/StructuredBinomPricing/cmake-build-debug/CMakeFiles/StructuredBinomPricing.dir
+C:/Users/peter/CLionProjects/FinanceCourse2023/StructuredBinomPricing/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/peter/CLionProjects/FinanceCourse2023/StructuredBinomPricing/cmake-build-debug/CMakeFiles/rebuild_cache.dir

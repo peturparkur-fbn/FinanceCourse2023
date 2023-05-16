@@ -1,3 +1,0 @@
-/Users/peternagymathe/work/code/FinanceCourse2023/structures/cmake-build-debug/CMakeFiles/structures.dir
-/Users/peternagymathe/work/code/FinanceCourse2023/structures/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/peternagymathe/work/code/FinanceCourse2023/structures/cmake-build-debug/CMakeFiles/rebuild_cache.dir
