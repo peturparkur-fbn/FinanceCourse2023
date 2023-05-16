@@ -28,7 +28,6 @@ double static BinomialPrice(double S0, double U, double D, int N, double i) {
 
 double static AnalyticBinomialPrice(double S0, double U, double D, double R, int N, std::function<double(double)> priceFunc) {
     double q = RiskNeutralProb(U, D, R);
-    std::cout << "q: " << q << std::endl;
     auto res = std::ranges::views::iota(0, N)
                | std::ranges::views::transform(
             [S0, U, D, N, q, priceFunc](int i) {

@@ -7,38 +7,39 @@
 /// Concept/Interface for asset that can be Called and Put
 template<typename T>
 concept IOption = requires(T a, double b) {
-    { a.Call(b) } -> std::same_as<double>;
-    { a.Put(b) } -> std::same_as<double>;
+    { a.Payout(b) } -> std::same_as<double>;
 };
 
-// struct to represent a simple option.
-struct Option {
-    Option(double k){
+
+struct CallOption {
+    double strike;
+    CallOption(double k){
         strike = k;
     }
-
-    double strike;
-    double Call(double currPrice) {
-        return std::max(currPrice - strike, 0.0);
+    double Payout(double s) {
+        return std::max(s - strike, 0.0);
     }
-    double Put(double currPrice) {
-        return std::max(strike - currPrice, 0.0);
+};
+
+struct PutOption {
+    double strike;
+    PutOption(double k){
+        strike = k;
+    }
+    double Payout(double s) {
+        return std::max(strike - s, 0.0);
     }
 };
 
 template<IOption T>
 struct DigitalOption {
-
     T option;
 
     DigitalOption(T underlying) : option(underlying) {}
-    DigitalOption(double k) : option(Option(k)) {}
+    DigitalOption(double k) : option(CallOption(k)) {}
 
-    double Call(double currPrice) {
-        return option.Call(currPrice) > 0.0 ? 1.0 : 0.0;
-    }
-    double Put(double currPrice) {
-        return option.Put(currPrice) > 0.0 ? 1.0 : 0.0;
+    double Payout(double s) {
+        return option.Payout(s) > 0.0 ? 1.0 : 0.0;
     }
 };
 
@@ -48,14 +49,10 @@ struct DoubleDigital {
     DigitalOption<U> high;
 
     DoubleDigital(T _low, U _high): low(_low), high(_high) {}
-    DoubleDigital(double _low, double _high): low(DigitalOption<Option>(_low)), high(DigitalOption<Option>(_high)) { }
+    DoubleDigital(double _low, double _high): low(DigitalOption<CallOption>(_low)), high(DigitalOption<PutOption>(_high)) { }
 
-    double Call(double currPrice){
-        return (low.Call(currPrice) > 0) && (high.Put(currPrice) > 0);
-    }
-
-    double Put(double currPrice) {
-        return (low.Put(currPrice) > 0) || (high.Call(currPrice) > 0);
+    double Payout(double currPrice) {
+        return (low.Payout(currPrice) > 0) && (high.Payout(currPrice) > 0);
     }
 };
 
