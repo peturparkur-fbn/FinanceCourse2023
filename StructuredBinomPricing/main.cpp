@@ -70,6 +70,7 @@ int main() {
 
     auto digitalCall = DigitalOption<CallOption>(CallOption(strike));
     auto digitalPut = DigitalOption<PutOption>(PutOption(strike));
+
     // Price digital european option as call
     call_price = pricer.Evaluate(
             S0,
@@ -86,8 +87,7 @@ int main() {
     );
     std::cout << "Eur Digital Put Price: " << put_price << std::endl;
 
-    auto doubleDigital = DoubleDigital<CallOption, PutOption>(CallOption(90.0), PutOption(100.0));
-
+    auto doubleDigital = DoubleDigital<CallOption, PutOption>(CallOption(strike - down), PutOption(strike + up));
     // Price Double digital option
     call_price = pricer.Evaluate(
             S0,
