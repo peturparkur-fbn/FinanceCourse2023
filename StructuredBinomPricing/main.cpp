@@ -50,6 +50,22 @@ int main() {
     );
     std::cout << "Eur Put Price: " << put_price << std::endl;
 
+    // Price american option as call
+    call_price = pricer.EvaluateAmerican(
+            S0,
+            N,
+            [option](double x){return option->Call(x);}
+    );
+    std::cout << "American Call Price: " << call_price << std::endl;
+
+    // Price american option as put
+    put_price = pricer.EvaluateAmerican(
+            S0,
+            N,
+            [option](double x){return option->Put(x);}
+    );
+    std::cout << "American Put Price: " << put_price << std::endl;
+
 
     auto digital = DigitalOption<Option>(Option(strike));
     // Price digital european option as call

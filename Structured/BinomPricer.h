@@ -63,6 +63,32 @@ double static BinomialBackpropPrice(double S0, double U, double D, double R, int
     return Price[0]; // Return option price at initial time step
 }
 
+// Function to calculate the price of a European call option using the binomial model
+double static BinomialBackpropPriceAmerican(double S0, double U, double D, double R, int N, std::function<double(double)> priceFunc)
+{
+    double q = RiskNeutralProb(U, D, R); // Calculate risk-neutral probability
+    double Price[N+1]; // Initialize array to hold option prices
+
+    // Calculate option payoffs at final time step
+    for (int i = 0; i <= N; i++)
+    {
+        Price[i] = priceFunc(BinomialPrice(S0, U, D, N, i));
+    }
+
+    // Calculate option prices working backwards through the binomial tree
+    for (int n = N-1; n >= 0; n--)
+    {
+        for (int i = 0; i <= n; i++)
+        {
+            Price[i] = std::max(
+                    (q * Price[i+1] + (1 - q) * Price[i]) / (1 + R),
+                    priceFunc(BinomialPrice(S0, U, D, n, i))
+            );
+        }
+    }
+    return Price[0]; // Return option price at initial time step
+}
+
 class BinomPricer {
 private:
     double U;
@@ -78,6 +104,10 @@ public:
 
     double Evaluate(double S0, int N, std::function<double(double)> price) {
         return AnalyticBinomialPrice(S0, U, D, R, N, price);
+    }
+
+    double EvaluateAmerican(double S0, int N, std::function<double(double)> price) {
+        return BinomialBackpropPriceAmerican(S0, U, D, R, N, price);
     }
 
     double EvaluateBackprop(double S0, int N, std::function<double(double)> price) {
